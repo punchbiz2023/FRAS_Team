@@ -1,3 +1,4 @@
+import base64
 import os
 from dotenv import load_dotenv,dotenv_values
 import json
@@ -126,7 +127,9 @@ attendance_files = {
 # Define pages and styling for navigation bar
 pages = ["Home", "Upload Image", "Capture Image","LogOut"]
 parent_dir = os.path.dirname(os.path.abspath(__file__))
-logo_path = r"punch.svg"
+logo_path_1 = r"kot.svg"
+logo_path_2 = r"punch.svg"
+logo_path=r"logo.svg"
 styles = {
     "nav": {
         "box-sizing": "border-box",
@@ -165,6 +168,46 @@ options = {
 # Navigation bar selection logic after successful login
 if st.session_state.is_authenticated:
     st.markdown('<div class="custom-navbar">', unsafe_allow_html=True)
+    st.markdown("""
+        <style>
+            .bottom-logo-container {
+                position: fixed;
+                bottom: 10px;  /* Adjust the space from the bottom */
+                left: 0;
+                right: 0;
+                text-align: center;
+                background-color: white;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+            .bottom-logo-container img {
+                height: 40px;  /* Adjust the logo size */
+            }
+            .bottom-logo-container .label {
+                display: block;
+                font-size: 12px;
+                margin-top: 5px;
+                color: #333;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # Display the logos at the bottom
+    st.markdown("""
+        <div class="bottom-logo-container">
+            <span class="label">Associated with</span>
+        </div>
+        <div class="bottom-logo-container">
+            <img src="data:image/svg+xml;base64,{}" />
+            <img src="data:image/svg+xml;base64,{}" />
+        </div>
+        
+    """.format(
+        base64.b64encode(open(logo_path_1, 'rb').read()).decode(),
+        base64.b64encode(open(logo_path_2, 'rb').read()).decode()
+    ), unsafe_allow_html=True)
     page = st_navbar(
         pages,
         logo_path=logo_path,
