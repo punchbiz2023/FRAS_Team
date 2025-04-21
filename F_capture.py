@@ -183,4 +183,3 @@ def live_capture_page(known_faces_file, attendance_file):
             df = pd.read_csv(attendance_file)
             st.write("### Attendance Records:")
             st.dataframe(df)
-
